@@ -51,12 +51,12 @@ def read_multiple_oneline_files(target, glob_patterns):
     """
     find_cmd = 'find ' + ' '.join(glob_patterns)
     try:
-        paths = target.execute(find_cmd).split()
+        paths = target.execute(find_cmd, as_root=True).split()
     except TargetError:
         return {}
 
     cmd = '{} | {} xargs cat'.format(find_cmd, target.busybox)
-    contents = target.execute(cmd).splitlines()
+    contents = target.execute(cmd, as_root=True).splitlines()
 
     if len(contents) != len(paths):
         raise RuntimeError('File count mismatch while reading multiple files')
