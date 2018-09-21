@@ -35,3 +35,7 @@ else
 	echo "Please, source this configuration from a terminal running BASH."
 fi
 
+if [ $(uname -m) == "x86_64" ]; then
+        export PATH=$(pwd)/libs/devlib/devlib/bin/x86_64:$PATH
+fi
+
