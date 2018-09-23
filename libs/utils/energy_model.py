@@ -941,9 +941,14 @@ class EnergyModel(object):
             # cap_states lists the capacity of each state followed by its power,
             # in increasing order. The `zip` call does this:
             #   [c0, p0, c1, p1, c2, p2] -> [(c0, p0), (c1, p1), (c2, p2)]
+
+            # joshuous: This needs to be modified to handle the weird EM cap_states_strs node in sdm845.
+            # It currently has three values per line: capacity, frequency and power
             cap_states = [ActiveState(capacity=int(c), power=int(p))
-                          for c, p in zip(cap_states_strs[0::2],
-                                          cap_states_strs[1::2])]
+            #              for c, p in zip(cap_states_strs[0::2],
+            #                              cap_states_strs[1::2])]
+                          for c, p in zip(cap_states_strs[0::3],    # capacity: start at 0 and use steps of 3
+                                          cap_states_strs[2::3])]   # power: start at index 2 and use steps of 3
             freqs = target.cpufreq.list_frequencies(cpu)
             return OrderedDict(zip(sorted(freqs), cap_states))
 
