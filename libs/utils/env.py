@@ -1135,6 +1135,11 @@ class TestEnv(ShareState):
 
     @contextlib.contextmanager
     def freeze_userspace(self):
+        # joshuous: Never freeze userspace
+        self._log.info('Userspace freezing is disabled entirely.')
+        yield
+        return
+
         if 'cgroups' not in self.target.modules:
             raise RuntimeError(
                 'Failed to freeze userspace. Ensure "cgroups" module is listed '
