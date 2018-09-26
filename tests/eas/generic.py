@@ -372,6 +372,7 @@ class _EnergyModelTest(LisaTest):
 
         msg = 'Estimated {} bogo-Joules to run workload, expected {}'.format(
             est_energy, exp_energy)
+        self._log.info(msg)
         threshold = exp_energy * (1 + (self.energy_est_threshold_pct / 100.))
         self.assertLess(est_energy, threshold, msg=msg)
 
